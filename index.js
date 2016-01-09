@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 const low = ((state=0, action) => {
     if(action.type === 'UP') {
@@ -18,44 +18,35 @@ const high = ((state=9, action) => {
 
 class Basement extends React.Component {
     render() {
-        const store = this.context.store;
-        const high = store.getState().high;
+        const high = this.props.high;
         return (
-            <div>basement ... {high} <button onClick={() => { store.dispatch({type: 'DOWN'}); }}>down</button></div>
+            <div>basement ... {high} <button onClick={this.props.down}>down</button></div>
         );
     }
-}
-Basement.contextTypes = {
-    store: React.PropTypes.object
 }
 class MiddleOne extends React.Component {
     render() {
         return (
-            <div>middle and <Basement /></div>
+            <div>middle and <XBasement /></div>
         );
     }
 }
 class TopLevel extends React.Component {
-    componentDidMount() {
-        const store = this.context.store;
-        store.subscribe(() => {
-            this.forceUpdate();
-        });
-    }
     render() {
-        const store = this.context.store;
-        const low = store.getState().low;
+        const low = this.props.low;
         return (
-            <div>{low} <button onClick={() => { store.dispatch({type: 'UP'}); }}>up</button><MiddleOne /></div>
+            <div>{low} <button onClick={this.props.up}>up</button><MiddleOne /></div>
         );
     }
 }
-TopLevel.contextTypes = {
-    store: React.PropTypes.object
-}
+
+const mapLowDispatchToProps = (dispatch) => {return {up: () => dispatch({type: 'UP'})}}
+const mapHighDispatchToProps = (dispatch) => {return {down: () => dispatch({type: 'DOWN'})}}
+const XBasement = connect(state => {return {high: state.high}}, mapHighDispatchToProps)(Basement);
+const XTopLevel = connect(state => {return {low: state.low}}, mapLowDispatchToProps)(TopLevel);
 
 render((
     <Provider store={createStore(combineReducers({low: low, high: high}))}>
-      <TopLevel />
+      <XTopLevel />
     </Provider>
 ), document.getElementById('container'));
