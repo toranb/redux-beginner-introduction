@@ -1,11 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-const reducer = ((state=0, action) => {
+const low = ((state=0, action) => {
     if(action.type === 'UP') {
         return state + 1;
+    }
+    return state;
+});
+const high = ((state=9, action) => {
+    if(action.type === 'DOWN') {
+        return state - 1;
     }
     return state;
 });
@@ -13,9 +19,9 @@ const reducer = ((state=0, action) => {
 class Basement extends React.Component {
     render() {
         const store = this.context.store;
-        const state = store.getState();
+        const high = store.getState().high;
         return (
-            <div>basement ... {state}</div>
+            <div>basement ... {high} <button onClick={() => { store.dispatch({type: 'DOWN'}); }}>down</button></div>
         );
     }
 }
@@ -38,9 +44,9 @@ class TopLevel extends React.Component {
     }
     render() {
         const store = this.context.store;
-        const state = store.getState();
+        const low = store.getState().low;
         return (
-            <div>{state} <MiddleOne /><button onClick={() => { store.dispatch({type: 'UP'}); }}>up</button></div>
+            <div>{low} <button onClick={() => { store.dispatch({type: 'UP'}); }}>up</button><MiddleOne /></div>
         );
     }
 }
@@ -49,7 +55,7 @@ TopLevel.contextTypes = {
 }
 
 render((
-    <Provider store={createStore(reducer)}>
+    <Provider store={createStore(combineReducers({low: low, high: high}))}>
       <TopLevel />
     </Provider>
 ), document.getElementById('container'));
