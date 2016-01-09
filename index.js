@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 const reducer = ((state=0, action) => {
     if(action.type === 'UP') {
@@ -44,19 +45,6 @@ class TopLevel extends React.Component {
     }
 }
 TopLevel.contextTypes = {
-    store: React.PropTypes.object
-}
-class Provider extends React.Component {
-    getChildContext() {
-        return {
-            store: this.props.store
-        }
-    }
-    render() {
-        return this.props.children;
-    }
-}
-Provider.childContextTypes = {
     store: React.PropTypes.object
 }
 
