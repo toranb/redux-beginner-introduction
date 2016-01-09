@@ -16,28 +16,22 @@ const high = ((state=9, action) => {
     return state;
 });
 
-class Basement extends React.Component {
-    render() {
-        const high = this.props.high;
-        return (
-            <div>basement ... {high} <button onClick={this.props.down}>down</button></div>
-        );
-    }
+const Basement = (props) => {
+    const high = props.high;
+    return (
+        <div>basement ... {high} <button onClick={props.down}>down</button></div>
+    );
 }
-class MiddleOne extends React.Component {
-    render() {
-        return (
-            <div>middle and <XBasement /></div>
-        );
-    }
+const MiddleOne = () => {
+    return (
+        <div>middle and <XBasement /></div>
+    );
 }
-class TopLevel extends React.Component {
-    render() {
-        const low = this.props.low;
-        return (
-            <div>{low} <button onClick={this.props.up}>up</button><MiddleOne /></div>
-        );
-    }
+const TopLevel = (props) => {
+    const low = props.low;
+    return (
+        <div>{low} <button onClick={props.up}>up</button><MiddleOne /></div>
+    );
 }
 
 const mapLowDispatchToProps = (dispatch) => {return {up: () => dispatch({type: 'UP'})}}
