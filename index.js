@@ -9,9 +9,6 @@ const reducer = ((state=0, action) => {
     return state;
 });
 
-//step 2: get the state in the store (with render)
-//step 3: change the state in the store (with onClick)
-//step 4: subscribe to changes and forceUpdate (re-render)
 class TopLevel extends React.Component {
     componentDidMount() {
         const store = this.props.store;
@@ -28,7 +25,6 @@ class TopLevel extends React.Component {
     }
 }
 
-//step 1: create it as a prop and pass it down
 render((
     <TopLevel store={createStore(reducer)}/>
 ), document.getElementById('container'));
