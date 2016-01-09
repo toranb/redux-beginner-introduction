@@ -1,3 +1,5 @@
+import React from 'react';
+import { render } from 'react-dom';
 import { createStore } from 'redux';
 
 const reducer = ((state=0, action) => {
@@ -10,17 +12,23 @@ const reducer = ((state=0, action) => {
 //step 1: create it
 const store = createStore(reducer);
 
-//step 2: get the state in the store
-const render = () => {
-    document.body.innerText = store.getState();
-};
+//step 2: get the state in the store (with render)
+//step 3: change the state in the store (with onClick)
+//step 4: subscribe to changes and forceUpdate (re-render)
+class TopLevel extends React.Component {
+    componentDidMount() {
+        store.subscribe(() => {
+            this.forceUpdate();
+        });
+    }
+    render() {
+        const state = store.getState();
+        return (
+            <div>{state} <button onClick={() => { store.dispatch({type: 'UP'}); }}>up</button></div>
+        );
+    }
+}
 
-//step 3: change the state in the store
-document.addEventListener('click', () => {
-    store.dispatch({type: 'UP'});
-});
-
-//step 4: subscribe to changes and re-render the state
-store.subscribe(render);
-
-render();
+render((
+    <TopLevel />
+), document.getElementById('container'));
