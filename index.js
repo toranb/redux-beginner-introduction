@@ -9,6 +9,23 @@ const reducer = ((state=0, action) => {
     return state;
 });
 
+class Basement extends React.Component {
+    render() {
+        const store = this.props.store;
+        const state = store.getState();
+        return (
+            <div>basement ... {state}</div>
+        );
+    }
+}
+class MiddleOne extends React.Component {
+    render() {
+        const store = this.props.store;
+        return (
+            <div>middle and <Basement store={store}/></div>
+        );
+    }
+}
 class TopLevel extends React.Component {
     componentDidMount() {
         const store = this.props.store;
@@ -20,7 +37,7 @@ class TopLevel extends React.Component {
         const store = this.props.store;
         const state = store.getState();
         return (
-            <div>{state} <button onClick={() => { store.dispatch({type: 'UP'}); }}>up</button></div>
+            <div>{state} <MiddleOne store={store} /><button onClick={() => { store.dispatch({type: 'UP'}); }}>up</button></div>
         );
     }
 }
