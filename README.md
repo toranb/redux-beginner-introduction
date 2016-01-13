@@ -1,5 +1,6 @@
 
-#Simple redux starter example for dsmjs (jan 12th 2016)
+#Simple redux starter example for dsmjs 
+##(jan 12th 2016)
 
 ##Get up and running:
 ```
