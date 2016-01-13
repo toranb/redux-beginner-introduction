@@ -1,6 +1,6 @@
 
 #Simple redux starter example for dsmjs 
-##(jan 12th 2016)
+(jan 12th 2016)
 
 ##Get up and running:
 ```
@@ -22,6 +22,5 @@ $ git checkout --detach $(git log master --format=%H --grep='starting')
 $ git checkout --detach $(git log master --format=%H --grep='step 1:')
 $ git checkout --detach $(git log master --format=%H --grep='step 2:')
 $ git checkout --detach $(git log master --format=%H --grep='step 3:')
-
 etc...
 ```
