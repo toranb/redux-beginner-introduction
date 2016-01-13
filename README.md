@@ -8,15 +8,15 @@ $ cd redux-beginner-introduction/
 $ npm install
 $ npm run dev
 ```
-##In web browser: 
+##Web Browser: 
 ```
 http://localhost:4200
 ```
-##To Checkout first commit
+##Checkout first commit
 ```
 $ git checkout --detach $(git log master --format=%H --grep='starting')
 ```
-##To Checkout subsequent commits
+##Checkout subsequent commits
 ```
 $ git checkout --detach $(git log master --format=%H --grep='step 1:')
 $ git checkout --detach $(git log master --format=%H --grep='step 2:')
